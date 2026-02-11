@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bildungswege Stuttgart</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Einbindung von jsPDF für die PDF-Generierung -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-
-    <!-- Header -->
+    <!-- ORIGINAL HEADER -->
     <header class="header">
         <div class="logo-container">
-            <div class="logo-text">
-                <span class="logo-main">Meldestelle</span>
-                <span class="logo-sub">Berufliche Schulen Stuttgart</span>
-            </div>
+            <span class="logo-main">Meldestelle</span>
+            <span class="logo-sub">Berufliche Schulen Stuttgart</span>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="hero">
         <div class="container">
             <h1 class="hero-title">Deine Zukunft.<br><span class="highlight">Dein Weg.</span></h1>
@@ -28,9 +23,7 @@
 
             <div class="cards-container">
 
-                <!-- === HAUPTBEREICHE (GROSSE KARTEN) === -->
-
-                <!-- CARD 1: BILDUNGSWEGE -->
+                <!-- 1. BILDUNGSWEGETOOL (WIZARD) - WIEDERHERGESTELLT -->
                 <section id="wizard-section" class="option-card">
                     <div class="card-header">
                         <div class="icon-wrapper">🚀</div>
@@ -38,8 +31,6 @@
                     </div>
                     <div class="card-content">
                         <p>Finde heraus, welcher Schulabschluss oder welche Ausbildung zu dir passt.</p>
-
-                        <!-- Wizard Content -->
                         <div id="wizard-step-1" class="wizard-step active">
                             <h3>Dein aktueller Stand?</h3>
                             <div class="options-grid">
@@ -48,15 +39,11 @@
                                 <button class="btn-option" onclick="selectBildungsstand('mittlerer')">Mittlerer Bildungsabschluss</button>
                             </div>
                         </div>
-
                         <div id="wizard-step-2" class="wizard-step" style="display: none;">
                             <h3>Dein Ziel?</h3>
-                            <div id="ziel-options" class="options-grid">
-                                <!-- Wird dynamisch gefüllt -->
-                            </div>
+                            <div id="ziel-options" class="options-grid"></div>
                             <button class="btn-back" onclick="resetWizard()">← Zurück</button>
                         </div>
-
                         <div id="wizard-results" class="wizard-step" style="display: none;">
                             <h3>Deine Möglichkeiten:</h3>
                             <div id="results-container"></div>
@@ -65,104 +52,65 @@
                     </div>
                 </section>
 
-                <!-- CARD 2: FORMULARE & INFOS (ERWEITERT) -->
+                <!-- 2. FORMULARE & INFOS (MIT PDF DOWNLOADS) -->
                 <section id="download-section" class="option-card">
                     <div class="card-header">
                         <div class="icon-wrapper">📄</div>
                         <h2>Formulare & Infos</h2>
                     </div>
                     <div class="card-content">
-                        <p>Wichtige Dokumente für VABO und AVdual.</p>
-
+                        <p>Wichtige Dokumente für VABO und AVdual direkt zum Download.</p>
                         <div class="download-group">
-                            <h3>VABO</h3>
-                            <div class="download-list">
-                                <a href="VABO Vermittlungsanfrage.pdf" download class="download-item">
-                                    <span class="file-icon">📥</span>
-                                    <span class="file-info">
-                                        <strong>Vermittlungsanfrage VABO</strong>
-                                        <span class="file-meta">PDF • Download</span>
-                                    </span>
-                                </a>
-                                <a href="VABO Hinweisblatt für SuS.pdf" download class="download-item">
-                                    <span class="file-icon">ℹ️</span>
-                                    <span class="file-info">
-                                        <strong>Hinweisblatt für Schüler*innen</strong>
-                                        <span class="file-meta">PDF • Download</span>
-                                    </span>
-                                </a>
-                            </div>
+                            <h3 style="margin-top:1rem; border-bottom:1px solid #ddd;">VABO</h3>
+                            <a href="VABO Vermittlungsanfrage.pdf" download class="download-item">
+                                <span class="file-icon">📥</span> <strong>Vermittlungsanfrage VABO</strong>
+                            </a>
+                            <a href="VABO Hinweisblatt für SuS.pdf" download class="download-item">
+                                <span class="file-icon">ℹ️</span> <strong>Hinweisblatt für Schüler*innen</strong>
+                            </a>
                         </div>
-
                         <div class="download-group">
-                            <h3>AVdual</h3>
-                            <div class="download-list">
-                                <a href="AVdual Vermittlungsanfrage.pdf" download class="download-item">
-                                    <span class="file-icon">📥</span>
-                                    <span class="file-info">
-                                        <strong>Vermittlungsanfrage AVdual</strong>
-                                        <span class="file-meta">PDF • Download</span>
-                                    </span>
-                                </a>
-                                <a href="AVdual Hinweisblatt für SuS.pdf" download class="download-item">
-                                    <span class="file-icon">ℹ️</span>
-                                    <span class="file-info">
-                                        <strong>Hinweisblatt für Schüler*innen</strong>
-                                        <span class="file-meta">PDF • Download</span>
-                                    </span>
-                                </a>
-                                <a href="AVdual Informationsblatt.pdf" download class="download-item">
-                                    <span class="file-icon">📄</span>
-                                    <span class="file-info">
-                                        <strong>Informationsblatt AVdual</strong>
-                                        <span class="file-meta">PDF • Download</span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-                            <em>Hinweis: Sie können die Formulare auch weiterhin <a href="#" onclick="generatePDF('vabo'); return false;">hier generieren</a>.</em>
+                            <h3 style="margin-top:1rem; border-bottom:1px solid #ddd;">AVdual</h3>
+                            <a href="AVdual Vermittlungsanfrage.pdf" download class="download-item">
+                                <span class="file-icon">📥</span> <strong>Vermittlungsanfrage AVdual</strong>
+                            </a>
+                            <a href="AVdual Hinweisblatt für SuS.pdf" download class="download-item">
+                                <span class="file-icon">ℹ️</span> <strong>Hinweisblatt für Schüler*innen</strong>
+                            </a>
+                             <a href="AVdual Informationsblatt.pdf" download class="download-item">
+                                <span class="file-icon">📄</span> <strong>Informationsblatt AVdual</strong>
+                            </a>
                         </div>
                     </div>
                 </section>
 
-                <!-- CARD 3: BEGRIFFE ERKLÄRT -->
+                <!-- 3. BEGRIFFE ERKLÄRT -->
                 <section id="glossar-section" class="option-card">
                     <div class="card-header">
                         <div class="icon-wrapper">💡</div>
                         <h2>Begriffe erklärt</h2>
                     </div>
                     <div class="card-content">
-                        <p>Was bedeuten die Abkürzungen? Hier findest du einfache Erklärungen.</p>
-                        <input type="text" id="glossar-search" placeholder="Begriff suchen..." onkeyup="filterGlossar()" class="search-input">
-                        <div id="glossar-container" class="accordion">
-                            <!-- Wird dynamisch durch script.js gefüllt -->
-                        </div>
+                        <input type="text" id="glossar-search" placeholder="Begriff suchen..." onkeyup="filterGlossar()" style="width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:8px; border:1px solid #ddd;">
+                        <div id="glossar-container" class="accordion"></div>
                     </div>
                 </section>
 
-                <!-- CARD 4: BERUFSWAHL-QUIZ -->
+                <!-- 4. BERUFSWAHL-QUIZ -->
                 <section id="quiz-section" class="option-card">
                     <div class="card-header">
                         <div class="icon-wrapper">🎯</div>
                         <h2>Berufswahl-Quiz</h2>
                     </div>
                     <div class="card-content">
-                        <p>Weißt du noch nicht, was du werden willst? Beantworte 3 Fragen.</p>
                         <div id="quiz-app">
-                            <div id="quiz-start">
-                                <button class="btn-primary" onclick="QuizApp.start()">Quiz starten</button>
-                            </div>
+                            <div id="quiz-start"><button class="btn-primary" onclick="QuizApp.start()">Quiz starten</button></div>
                             <div id="quiz-question-container" style="display: none;">
-                                <div class="quiz-progress-bar">
-                                    <div id="quiz-progress-fill" style="width: 0%"></div>
-                                </div>
-                                <h3 id="quiz-question-text">Frage Text</h3>
+                                <h3 id="quiz-question-text">Frage</h3>
                                 <div id="quiz-options-container" class="options-grid"></div>
                             </div>
                             <div id="quiz-results" style="display: none;">
-                                <h3>Deine Berufsvorschläge:</h3>
+                                <h3>Vorschläge:</h3>
                                 <div id="quiz-result-list"></div>
                                 <button class="btn-back" onclick="QuizApp.reset()">🔄 Neu starten</button>
                             </div>
@@ -170,79 +118,55 @@
                     </div>
                 </section>
 
-                <!-- === NEUE KLEINE KARTEN (2x2 GRID) === -->
-                <h2 style="margin-top: 2rem; margin-bottom: 1rem;">Weitere Informationen</h2>
+                <!-- NEUE SEKTION: 4 KLEINE KARTEN (2x2) -->
+                <h2 class="info-section-title">Weitere Informationen</h2>
 
                 <div class="small-cards-grid">
-
-                    <!-- KLEINE KARTE 1: Berufliche Schulen -->
+                    <!-- Karte 1 -->
                     <div class="card-small">
                         <div class="card-header-small">
                             <span class="icon-small">🏫</span>
                             <h3>Berufliche Schulen</h3>
                         </div>
                         <div class="card-content-small">
-                            <a href="Zugangsvoraussetzungen Beruflichen Schulen.pdf" download class="download-link-small">
-                                Zugangsvoraussetzungen (PDF)
-                            </a>
+                            <a href="Zugangsvoraussetzungen Beruflichen Schulen.pdf" download class="download-link-small">Zugangsvoraussetzungen (PDF)</a>
                         </div>
                     </div>
-
-                    <!-- KLEINE KARTE 2: Ausbildung -->
+                    <!-- Karte 2 -->
                     <div class="card-small">
                         <div class="card-header-small">
                             <span class="icon-small">🛠️</span>
                             <h3>Ausbildung</h3>
                         </div>
                         <div class="card-content-small">
-                            <p class="placeholder-text">Unterlagen folgen</p>
+                             <p class="placeholder-text">Unterlagen folgen</p>
                         </div>
                     </div>
-
-                    <!-- KLEINE KARTE 3: Flyer -->
+                    <!-- Karte 3 -->
                     <div class="card-small">
                         <div class="card-header-small">
                             <span class="icon-small">📢</span>
                             <h3>Flyer</h3>
                         </div>
                         <div class="card-content-small">
-                            <a href="Flyer Elternstiftung BW.pdf" download class="download-link-small">
-                                Flyer Elternstiftung BW (PDF)
-                            </a>
+                            <a href="Flyer Elternstiftung BW.pdf" download class="download-link-small">Flyer Elternstiftung BW (PDF)</a>
                         </div>
                     </div>
-
-                    <!-- KLEINE KARTE 4: Informationsmaterial -->
+                    <!-- Karte 4 -->
                     <div class="card-small">
                         <div class="card-header-small">
                             <span class="icon-small">ℹ️</span>
                             <h3>Informationsmaterial</h3>
                         </div>
                         <div class="card-content-small">
-                            <a href="Bildungs- und Qualifizierungswege in Stuttgart.pdf" download class="download-link-small">
-                                Bildungs- & Qualifizierungswege (PDF)
-                            </a>
+                            <a href="Bildungs- und Qualifizierungswege in Stuttgart.pdf" download class="download-link-small">Bildungs- & Qualifizierungswege (PDF)</a>
                         </div>
                     </div>
-
                 </div>
 
-            </div>
+            </div> <!-- End Cards Container -->
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Meldestelle Berufliche Schulen Stuttgart. Alle Rechte vorbehalten.</p>
-            <div class="footer-links">
-                <a href="#">Impressum</a>
-                <a href="#">Datenschutz</a>
-                <a href="#">Kontakt</a>
-            </div>
-        </div>
-    </footer>
-
     <script src="script.js"></script>
 </body>
 </html>
