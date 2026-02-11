@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bildungswege Stuttgart</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="logo-container">
             <span class="logo-main">Meldestelle</span>
@@ -19,143 +17,133 @@
     <main class="hero">
         <div class="container">
             <h1 class="hero-title">Deine Zukunft.<br><span class="highlight">Dein Weg.</span></h1>
-            <p class="hero-subtitle">Finde den passenden Bildungsweg oder Beruf in Stuttgart.</p>
 
             <div class="cards-container">
 
-                <!-- CARD 1: BILDUNGSWEGE (WIZARD) -->
+                <!-- BILDUNGSWEGETOOL (DROPDOWNS) -->
                 <section id="wizard-section" class="option-card">
                     <div class="card-header">
                         <div class="icon-wrapper">🚀</div>
                         <h2>Bildungs- und Qualifizierungswege</h2>
                     </div>
                     <div class="card-content">
-                        <p>Finde heraus, welcher Schulabschluss oder welche Ausbildung zu dir passt.</p>
-                        <div id="wizard-step-1" class="wizard-step active">
-                            <h3>Dein aktueller Stand?</h3>
-                            <div class="options-grid">
-                                <button class="btn-option" onclick="selectBildungsstand('kein')">Kein Abschluss</button>
-                                <button class="btn-option" onclick="selectBildungsstand('hauptschul')">Hauptschulabschluss</button>
-                                <button class="btn-option" onclick="selectBildungsstand('mittlerer')">Mittlerer Bildungsabschluss</button>
+
+                        <div class="split-container">
+                            <div class="split-section">
+                                <div class="section-title"><span class="section-number">1</span> Start</div>
+                                <div class="select-wrapper">
+                                    <label class="select-label">Aktueller Abschluss</label>
+                                    <select id="start">
+                                        <option value="">-- Bitte wählen --</option>
+                                        <option value="ohneAbschluss">Ohne Abschluss</option>
+                                        <option value="vabo">VABO (Deutschförderung)</option>
+                                        <option value="hauptschulabschluss">Hauptschulabschluss</option>
+                                        <option value="mittlereReife">Mittlere Reife</option>
+                                        <option value="abitur">Abitur</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="split-section">
+                                <div class="section-title"><span class="section-number">2</span> Ziel</div>
+                                <div class="select-wrapper">
+                                    <label class="select-label">Gewünschter Abschluss</label>
+                                    <select id="ziel">
+                                        <option value="">-- Bitte wählen --</option>
+                                        <option value="hauptschulabschluss">Hauptschulabschluss</option>
+                                        <option value="mittlereReife">Mittlere Reife</option>
+                                        <option value="fachhochschulreife">Fachhochschulreife</option>
+                                        <option value="abitur">Abitur</option>
+                                        <option value="berufsabschluss">Berufsabschluss</option>
+                                        <option value="studium">Studium</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div id="wizard-step-2" class="wizard-step" style="display: none;">
-                            <h3>Dein Ziel?</h3>
-                            <div id="ziel-options" class="options-grid"></div>
-                            <button class="btn-back" onclick="resetWizard()">← Zurück</button>
+
+                        <!-- Visualisierung -->
+                        <div class="visualization-area">
+                            <div class="endpoint-circle" id="vis-start">?</div>
+                            <div class="connection-line"><div class="connection-arrow"></div></div>
+                            <div class="endpoint-circle" id="vis-target">?</div>
                         </div>
-                        <div id="wizard-results" class="wizard-step" style="display: none;">
-                            <h3>Deine Möglichkeiten:</h3>
-                            <div id="results-container"></div>
-                            <button class="btn-back" onclick="resetWizard()">← Neue Suche</button>
-                        </div>
+
+                        <button class="btn-primary" onclick="showPaths()">🔍 Wege anzeigen</button>
+                        <button class="btn-secondary" onclick="resetPaths()">🔄 Zurücksetzen</button>
+
+                        <div id="result" class="results-container"></div>
                     </div>
                 </section>
 
-                <!-- CARD 2: FORMULARE & INFOS (PDFs in neuem TAB) -->
+                <!-- DOWNLOADS (TARGET BLANK) -->
                 <section id="download-section" class="option-card">
-                    <div class="card-header">
-                        <div class="icon-wrapper">📄</div>
-                        <h2>Formulare & Infos</h2>
-                    </div>
+                    <div class="card-header"><div class="icon-wrapper">📄</div><h2>Formulare & Infos</h2></div>
                     <div class="card-content">
-                        <p>Wichtige Dokumente für VABO und AVdual direkt öffnen.</p>
-                        <div class="download-group">
-                            <h3 style="margin-top:1rem; border-bottom:1px solid #ddd; margin-bottom:1rem;">VABO</h3>
-                            <div class="download-list">
-                                <a href="VABO Vermittlungsanfrage.pdf" target="_blank" class="download-item">
-                                    <span class="file-icon">📝</span>
-                                    <span class="file-info"><strong>Vermittlungsanfrage VABO</strong><span class="file-meta">PDF • Öffnen im Browser</span></span>
-                                </a>
-                                <a href="VABO Hinweisblatt für SuS.pdf" target="_blank" class="download-item">
-                                    <span class="file-icon">ℹ️</span>
-                                    <span class="file-info"><strong>Hinweisblatt für Schüler*innen</strong><span class="file-meta">PDF • Öffnen im Browser</span></span>
-                                </a>
-                            </div>
+                         <div class="download-group">
+                            <h3>VABO</h3>
+                            <a href="VABO Vermittlungsanfrage.pdf" target="_blank" class="download-item">📝 Vermittlungsanfrage VABO</a>
+                            <a href="VABO Hinweisblatt für SuS.pdf" target="_blank" class="download-item">ℹ️ Hinweisblatt VABO</a>
                         </div>
-                        <div class="download-group">
-                            <h3 style="margin-top:1rem; border-bottom:1px solid #ddd; margin-bottom:1rem;">AVdual</h3>
-                            <div class="download-list">
-                                <a href="AVdual Vermittlungsanfrage.pdf" target="_blank" class="download-item">
-                                    <span class="file-icon">📝</span>
-                                    <span class="file-info"><strong>Vermittlungsanfrage AVdual</strong><span class="file-meta">PDF • Öffnen im Browser</span></span>
-                                </a>
-                                <a href="AVdual Hinweisblatt für SuS.pdf" target="_blank" class="download-item">
-                                    <span class="file-icon">ℹ️</span>
-                                    <span class="file-info"><strong>Hinweisblatt für Schüler*innen</strong><span class="file-meta">PDF • Öffnen im Browser</span></span>
-                                </a>
-                                <a href="AVdual Informationsblatt.pdf" target="_blank" class="download-item">
-                                    <span class="file-icon">📄</span>
-                                    <span class="file-info"><strong>Informationsblatt AVdual</strong><span class="file-meta">PDF • Öffnen im Browser</span></span>
-                                </a>
-                            </div>
+                        <div class="download-group" style="margin-top:1rem">
+                            <h3>AVdual</h3>
+                            <a href="AVdual Vermittlungsanfrage.pdf" target="_blank" class="download-item">📝 Vermittlungsanfrage AVdual</a>
+                            <a href="AVdual Hinweisblatt für SuS.pdf" target="_blank" class="download-item">ℹ️ Hinweisblatt AVdual</a>
+                             <a href="AVdual Informationsblatt.pdf" target="_blank" class="download-item">📄 Informationsblatt AVdual</a>
                         </div>
                     </div>
                 </section>
 
-                <!-- CARD 3: BEGRIFFE ERKLÄRT -->
+                <!-- GLOSSAR -->
                 <section id="glossar-section" class="option-card">
-                    <div class="card-header">
-                        <div class="icon-wrapper">💡</div>
-                        <h2>Begriffe erklärt</h2>
-                    </div>
+                    <div class="card-header"><div class="icon-wrapper">💡</div><h2>Begriffe erklärt</h2></div>
                     <div class="card-content">
-                        <input type="text" id="glossar-search" placeholder="Begriff suchen..." onkeyup="filterGlossar()" class="search-input">
-                        <div id="glossar-container" class="accordion"></div>
+                        <input type="text" id="glossar-search" onkeyup="filterGlossar()" placeholder="Suche..." style="width:100%; padding:10px; margin-bottom:1rem; border:1px solid #ddd; border-radius:4px;">
+                        <div id="glossar-container"></div>
                     </div>
                 </section>
 
-                <!-- CARD 4: BERUFSWAHL-QUIZ -->
+                <!-- QUIZ -->
                 <section id="quiz-section" class="option-card">
-                    <div class="card-header">
-                        <div class="icon-wrapper">🎯</div>
-                        <h2>Berufswahl-Quiz</h2>
-                    </div>
+                    <div class="card-header"><div class="icon-wrapper">🎯</div><h2>Berufswahl-Quiz</h2></div>
                     <div class="card-content">
                         <div id="quiz-app">
-                            <div id="quiz-start">
-                                <button class="btn-primary" onclick="QuizApp.start()">Quiz starten</button>
-                            </div>
-                            <div id="quiz-question-container" style="display: none;">
-                                <div class="quiz-progress-bar"><div id="quiz-progress-fill" style="width: 0%"></div></div>
+                            <div id="quiz-start"><button class="btn-primary" onclick="QuizApp.start()">Quiz starten</button></div>
+                            <div id="quiz-question-container" style="display:none">
+                                <div style="background:#eee; height:8px; border-radius:4px; margin-bottom:1rem"><div id="quiz-progress-fill" style="background:var(--text-dark); height:100%; width:0%"></div></div>
                                 <h3 id="quiz-question-text">Frage</h3>
-                                <div id="quiz-options-container" class="options-grid"></div>
+                                <div id="quiz-options-container" class="quiz-options"></div>
                             </div>
-                            <div id="quiz-results" style="display: none;">
-                                <h3>Deine Berufsvorschläge:</h3>
+                            <div id="quiz-results" style="display:none">
                                 <div id="quiz-result-list"></div>
-                                <button class="btn-back" onclick="QuizApp.reset()">🔄 Neu starten</button>
+                                <button class="btn-secondary" onclick="QuizApp.reset()">Neu starten</button>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- NEUE SEKTION: 4 KLEINE KARTEN (2x2 GRID) -->
+                <!-- SMALL CARDS 2x2 -->
                 <h2 class="info-section-title">Weitere Informationen</h2>
-
                 <div class="small-cards-grid">
                     <div class="card-small">
                         <div class="card-header-small"><span class="icon-small">🏫</span><h3>Berufliche Schulen</h3></div>
-                        <div class="card-content-small"><a href="Zugangsvoraussetzungen Beruflichen Schulen.pdf" target="_blank" class="download-link-small">Zugangsvoraussetzungen (PDF)</a></div>
+                        <a href="Zugangsvoraussetzungen Beruflichen Schulen.pdf" target="_blank" class="download-link-small">Zugangsvoraussetzungen (PDF)</a>
                     </div>
                     <div class="card-small">
                         <div class="card-header-small"><span class="icon-small">🛠️</span><h3>Ausbildung</h3></div>
-                        <div class="card-content-small"><p class="placeholder-text">Unterlagen folgen</p></div>
+                        <p class="placeholder-text">Unterlagen folgen</p>
                     </div>
                     <div class="card-small">
                         <div class="card-header-small"><span class="icon-small">📢</span><h3>Flyer</h3></div>
-                        <div class="card-content-small"><a href="Flyer Elternstiftung BW.pdf" target="_blank" class="download-link-small">Flyer Elternstiftung BW (PDF)</a></div>
+                        <a href="Flyer Elternstiftung BW.pdf" target="_blank" class="download-link-small">Flyer Elternstiftung BW (PDF)</a>
                     </div>
                     <div class="card-small">
                         <div class="card-header-small"><span class="icon-small">ℹ️</span><h3>Informationsmaterial</h3></div>
-                        <div class="card-content-small"><a href="Bildungs- und Qualifizierungswege in Stuttgart.pdf" target="_blank" class="download-link-small">Bildungs- & Qualifizierungswege (PDF)</a></div>
+                        <a href="Bildungs- und Qualifizierungswege in Stuttgart.pdf" target="_blank" class="download-link-small">Bildungswege (PDF)</a>
                     </div>
                 </div>
 
             </div>
         </div>
     </main>
-    <footer class="footer"><div class="container"><p>&copy; 2026 Meldestelle Berufliche Schulen Stuttgart.</p></div></footer>
     <script src="script.js"></script>
 </body>
 </html>
