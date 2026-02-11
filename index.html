@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bildungswege Stuttgart</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Einbindung von jsPDF für die PDF-Generierung -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-text">
+                <span class="logo-main">Meldestelle</span>
+                <span class="logo-sub">Berufliche Schulen Stuttgart</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="hero">
+        <div class="container">
+            <h1 class="hero-title">Deine Zukunft.<br><span class="highlight">Dein Weg.</span></h1>
+            <p class="hero-subtitle">Finde den passenden Bildungsweg oder Beruf in Stuttgart.</p>
+
+            <div class="cards-container">
+
+                <!-- CARD 1: BILDUNGSWEGE (Bestehend) -->
+                <section id="wizard-section" class="option-card">
+                    <div class="card-header">
+                        <div class="icon-wrapper">🚀</div>
+                        <h2>Bildungs- und Qualifizierungswege</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Finde heraus, welcher Schulabschluss oder welche Ausbildung zu dir passt.</p>
+
+                        <!-- Wizard Content -->
+                        <div id="wizard-step-1" class="wizard-step active">
+                            <h3>Dein aktueller Stand?</h3>
+                            <div class="options-grid">
+                                <button class="btn-option" onclick="selectBildungsstand('kein')">Kein Abschluss</button>
+                                <button class="btn-option" onclick="selectBildungsstand('hauptschul')">Hauptschulabschluss</button>
+                                <button class="btn-option" onclick="selectBildungsstand('mittlerer')">Mittlerer Bildungsabschluss</button>
+                            </div>
+                        </div>
+
+                        <div id="wizard-step-2" class="wizard-step" style="display: none;">
+                            <h3>Dein Ziel?</h3>
+                            <div id="ziel-options" class="options-grid">
+                                <!-- Wird dynamisch gefüllt -->
+                            </div>
+                            <button class="btn-back" onclick="resetWizard()">← Zurück</button>
+                        </div>
+
+                        <div id="wizard-results" class="wizard-step" style="display: none;">
+                            <h3>Deine Möglichkeiten:</h3>
+                            <div id="results-container"></div>
+                            <button class="btn-back" onclick="resetWizard()">← Neue Suche</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CARD 2: FORMULARE (Bestehend) -->
+                <section id="download-section" class="option-card">
+                    <div class="card-header">
+                        <div class="icon-wrapper">📄</div>
+                        <h2>Formulare & Infos</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Lade hier wichtige Dokumente direkt herunter.</p>
+                        <div class="download-list">
+                            <a href="#" class="download-item" onclick="generatePDF('vabo')">
+                                <span class="file-icon">📥</span>
+                                <span class="file-info">
+                                    <strong>Anfrage VABO (SJ 26/27)</strong>
+                                    <span class="file-meta">PDF • Formular zur Anmeldung</span>
+                                </span>
+                            </a>
+                            <a href="#" class="download-item" onclick="generatePDF('avdual')">
+                                <span class="file-icon">📥</span>
+                                <span class="file-info">
+                                    <strong>Vermittlungsanfrage AVdual</strong>
+                                    <span class="file-meta">PDF • Formular zur Anmeldung</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CARD 3: BEGRIFFE ERKLÄRT (NEU) -->
+                <section id="glossar-section" class="option-card">
+                    <div class="card-header">
+                        <div class="icon-wrapper">💡</div>
+                        <h2>Begriffe erklärt</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Was bedeuten die Abkürzungen? Hier findest du einfache Erklärungen.</p>
+                        <!-- Suchfeld für Begriffe -->
+                        <input type="text" id="glossar-search" placeholder="Begriff suchen..." onkeyup="filterGlossar()" class="search-input">
+
+                        <!-- Container für das Akkordeon -->
+                        <div id="glossar-container" class="accordion">
+                            <!-- Wird dynamisch durch script.js gefüllt -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CARD 4: BERUFSWAHL-QUIZ (NEU) -->
+                <section id="quiz-section" class="option-card">
+                    <div class="card-header">
+                        <div class="icon-wrapper">🎯</div>
+                        <h2>Berufswahl-Quiz</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Weißt du noch nicht, was du werden willst? Beantworte 3 Fragen.</p>
+
+                        <div id="quiz-app">
+                            <!-- Start Screen -->
+                            <div id="quiz-start">
+                                <button class="btn-primary" onclick="QuizApp.start()">Quiz starten</button>
+                            </div>
+
+                            <!-- Question Screen -->
+                            <div id="quiz-question-container" style="display: none;">
+                                <div class="quiz-progress-bar">
+                                    <div id="quiz-progress-fill" style="width: 0%"></div>
+                                </div>
+                                <h3 id="quiz-question-text">Frage Text</h3>
+                                <div id="quiz-options-container" class="options-grid">
+                                    <!-- Optionen werden hier geladen -->
+                                </div>
+                            </div>
+
+                            <!-- Result Screen -->
+                            <div id="quiz-results" style="display: none;">
+                                <h3>Deine Berufsvorschläge:</h3>
+                                <div id="quiz-result-list"></div>
+                                <button class="btn-back" onclick="QuizApp.reset()">🔄 Neu starten</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Meldestelle Berufliche Schulen Stuttgart. Alle Rechte vorbehalten.</p>
+            <div class="footer-links">
+                <a href="#">Impressum</a>
+                <a href="#">Datenschutz</a>
+                <a href="#">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
