@@ -4,212 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bildungswege Stuttgart</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<header class="header">
-    <div class="header-inner">
-        <div class="logo">🦁</div>
-        <div class="header-title">
-            <h1>Bildungswege Stuttgart</h1>
-            <p>Meldestelle Berufliche Schulen</p>
+    <header class="header">
+        <div class="logo-container">
+            <span class="logo-main">Meldestelle</span>
+            <span class="logo-sub">Berufliche Schulen Stuttgart</span>
         </div>
-    </div>
-</header>
+    </header>
 
-<div class="container">
+    <main class="hero">
+        <div class="container">
+            <h1 class="hero-title">Deine Zukunft.<br><span class="highlight">Dein Weg.</span></h1>
 
-    <!-- 1. WIZARD -->
-    <div class="card" id="tool">
-        <h2>🎓 Bildungswege-Tool</h2>
-        <p>Wähle deinen aktuellen Stand und dein Ziel aus, um deinen individuellen Weg zu finden.</p>
+            <div class="cards-container">
 
-        <div class="wizard-controls">
-            <div class="form-group">
-                <label for="start">Start: Dein aktueller Abschluss</label>
-                <select id="start">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="ohneAbschluss">Ohne Abschluss (allgemeinbildend)</option>
-                    <option value="sbbz">SBBZ (Förderschule)</option>
-                    <option value="vabo">VABO (Deutschförderung)</option>
-                    <option value="hauptschulabschluss">Hauptschulabschluss</option>
-                    <option value="mittlereReife">Mittlere Reife / Realschulabschluss</option>
-                    <option value="fachhochschulreife">Fachhochschulreife</option>
-                    <option value="abitur">Abitur</option>
-                    <option value="berufsabschluss">Abgeschlossene Berufsausbildung</option>
-                    <option value="meister">Meister / Techniker</option>
-                </select>
-            </div>
+                <!-- BILDUNGSWEGETOOL (DROPDOWNS) -->
+                <section id="wizard-section" class="option-card">
+                    <div class="card-header">
+                        <div class="icon-wrapper">🚀</div>
+                        <h2>Bildungs- und Qualifizierungswege</h2>
+                    </div>
+                    <div class="card-content">
 
-            <div class="form-group">
-                <label for="ziel">Ziel: Dein gewünschter Abschluss</label>
-                <select id="ziel">
-                    <option value="">-- Bitte wählen --</option>
-                    <option value="hauptschulabschluss">Hauptschulabschluss</option>
-                    <option value="mittlereReife">Mittlere Reife / Fachschulreife</option>
-                    <option value="fachhochschulreife">Fachhochschulreife</option>
-                    <option value="abitur">Abitur / Allg. Hochschulreife</option>
-                    <option value="berufsabschluss">Berufsabschluss (Ausbildung)</option>
-                    <option value="meister">Meister / Techniker / Fachwirt</option>
-                    <option value="studium">Studium</option>
-                    <option value="bve">BVE (Berufsvorbereitung SBBZ)</option>
-                    <option value="vabKF">VAB-KF</option>
-                    <option value="sonderberufsschule">Sonderberufsschule</option>
-                </select>
-            </div>
-        </div>
+                        <div class="split-container">
+                            <div class="split-section">
+                                <div class="section-title"><span class="section-number">1</span> Start</div>
+                                <div class="select-wrapper">
+                                    <label class="select-label">Aktueller Abschluss</label>
+                                    <select id="start">
+                                        <option value="">-- Bitte wählen --</option>
+                                        <option value="ohneAbschluss">Ohne Abschluss</option>
+                                        <option value="vabo">VABO (Deutschförderung)</option>
+                                        <option value="hauptschulabschluss">Hauptschulabschluss</option>
+                                        <option value="mittlereReife">Mittlere Reife</option>
+                                        <option value="abitur">Abitur</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="split-section">
+                                <div class="section-title"><span class="section-number">2</span> Ziel</div>
+                                <div class="select-wrapper">
+                                    <label class="select-label">Gewünschter Abschluss</label>
+                                    <select id="ziel">
+                                        <option value="">-- Bitte wählen --</option>
+                                        <option value="hauptschulabschluss">Hauptschulabschluss</option>
+                                        <option value="mittlereReife">Mittlere Reife</option>
+                                        <option value="fachhochschulreife">Fachhochschulreife</option>
+                                        <option value="abitur">Abitur</option>
+                                        <option value="berufsabschluss">Berufsabschluss</option>
+                                        <option value="studium">Studium</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-        <button class="btn-primary" onclick="showPaths()">🔍 Wege anzeigen</button>
-        <button class="btn-primary" style="background:#FFF; color:#333; border:2px solid #EEE;" onclick="resetPaths()">Zurücksetzen</button>
+                        <!-- Visualisierung -->
+                        <div class="visualization-area">
+                            <div class="endpoint-circle" id="vis-start">?</div>
+                            <div class="connection-line"><div class="connection-arrow"></div></div>
+                            <div class="endpoint-circle" id="vis-target">?</div>
+                        </div>
 
-        <div id="result" style="margin-top: 30px;"></div>
-    </div>
+                        <button class="btn-primary" onclick="showPaths()">🔍 Wege anzeigen</button>
+                        <button class="btn-secondary" onclick="resetPaths()">🔄 Zurücksetzen</button>
 
-    <!-- 2. PDF KARTE -->
-    <div class="card" id="pdf-overview">
-        <h2>📋 Übersicht: Bildungs- und Qualifizierungswege</h2>
-        <p>Alle Wege auf einen Blick (basierend auf der offiziellen Grafik).</p>
+                        <div id="result" class="results-container"></div>
+                    </div>
+                </section>
 
-        <div class="tab-nav">
-            <button class="tab-btn active" onclick="openTab(event, 'tab-kein')">Kein Schulabschluss</button>
-            <button class="tab-btn" onclick="openTab(event, 'tab-haupt')">Hauptschulabschluss</button>
-            <button class="tab-btn" onclick="openTab(event, 'tab-mittel')">Mittlere Reife</button>
-        </div>
+                <!-- DOWNLOADS (TARGET BLANK) -->
+                <section id="download-section" class="option-card">
+                    <div class="card-header"><div class="icon-wrapper">📄</div><h2>Formulare & Infos</h2></div>
+                    <div class="card-content">
+                         <div class="download-group">
+                            <h3>VABO</h3>
+                            <a href="VABO Vermittlungsanfrage.pdf" target="_blank" class="download-item">📝 Vermittlungsanfrage VABO</a>
+                            <a href="VABO Hinweisblatt für SuS.pdf" target="_blank" class="download-item">ℹ️ Hinweisblatt VABO</a>
+                        </div>
+                        <div class="download-group" style="margin-top:1rem">
+                            <h3>AVdual</h3>
+                            <a href="AVdual Vermittlungsanfrage.pdf" target="_blank" class="download-item">📝 Vermittlungsanfrage AVdual</a>
+                            <a href="AVdual Hinweisblatt für SuS.pdf" target="_blank" class="download-item">ℹ️ Hinweisblatt AVdual</a>
+                             <a href="AVdual Informationsblatt.pdf" target="_blank" class="download-item">📄 Informationsblatt AVdual</a>
+                        </div>
+                    </div>
+                </section>
 
-        <div id="tab-kein" class="tab-content active">
-            <div class="info-grid">
-                <div class="info-col">
-                    <h3>Ziel: Hauptschulabschluss</h3>
-                    <ul>
-                        <li>AVdual</li>
-                        <li>LISA</li>
-                        <li>400+ Zukunft</li>
-                        <li>Youssef</li>
-                        <li>Haus der Lebenschance</li>
-                        <li>BvB</li>
-                        <li>Schulfremdenprüfung</li>
-                    </ul>
+                <!-- GLOSSAR -->
+                <section id="glossar-section" class="option-card">
+                    <div class="card-header"><div class="icon-wrapper">💡</div><h2>Begriffe erklärt</h2></div>
+                    <div class="card-content">
+                        <input type="text" id="glossar-search" onkeyup="filterGlossar()" placeholder="Suche..." style="width:100%; padding:10px; margin-bottom:1rem; border:1px solid #ddd; border-radius:4px;">
+                        <div id="glossar-container"></div>
+                    </div>
+                </section>
+
+                <!-- QUIZ -->
+                <section id="quiz-section" class="option-card">
+                    <div class="card-header"><div class="icon-wrapper">🎯</div><h2>Berufswahl-Quiz</h2></div>
+                    <div class="card-content">
+                        <div id="quiz-app">
+                            <div id="quiz-start"><button class="btn-primary" onclick="QuizApp.start()">Quiz starten</button></div>
+                            <div id="quiz-question-container" style="display:none">
+                                <div style="background:#eee; height:8px; border-radius:4px; margin-bottom:1rem"><div id="quiz-progress-fill" style="background:var(--text-dark); height:100%; width:0%"></div></div>
+                                <h3 id="quiz-question-text">Frage</h3>
+                                <div id="quiz-options-container" class="quiz-options"></div>
+                            </div>
+                            <div id="quiz-results" style="display:none">
+                                <div id="quiz-result-list"></div>
+                                <button class="btn-secondary" onclick="QuizApp.reset()">Neu starten</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SMALL CARDS 2x2 -->
+                <h2 class="info-section-title">Weitere Informationen</h2>
+                <div class="small-cards-grid">
+                    <div class="card-small">
+                        <div class="card-header-small"><span class="icon-small">🏫</span><h3>Berufliche Schulen</h3></div>
+                        <a href="Zugangsvoraussetzungen Beruflichen Schulen.pdf" target="_blank" class="download-link-small">Zugangsvoraussetzungen (PDF)</a>
+                    </div>
+                    <div class="card-small">
+                        <div class="card-header-small"><span class="icon-small">🛠️</span><h3>Ausbildung</h3></div>
+                        <p class="placeholder-text">Unterlagen folgen</p>
+                    </div>
+                    <div class="card-small">
+                        <div class="card-header-small"><span class="icon-small">📢</span><h3>Flyer</h3></div>
+                        <a href="Flyer Elternstiftung BW.pdf" target="_blank" class="download-link-small">Flyer Elternstiftung BW (PDF)</a>
+                    </div>
+                    <div class="card-small">
+                        <div class="card-header-small"><span class="icon-small">ℹ️</span><h3>Informationsmaterial</h3></div>
+                        <a href="Bildungs- und Qualifizierungswege in Stuttgart.pdf" target="_blank" class="download-link-small">Bildungswege (PDF)</a>
+                    </div>
                 </div>
-                <div class="info-col">
-                    <h3>Ziel: Orientierung</h3>
-                    <ul>
-                        <li>VABO</li>
-                        <li>Freiwilligendienste (Inland/Ausland)</li>
-                        <li>EQ (Einstiegsqualifizierung)</li>
-                    </ul>
-                </div>
-                <div class="info-col">
-                    <h3>Ziel: Ausbildung</h3>
-                    <ul>
-                        <li>Duale Ausbildung</li>
-                        <li>BaE / BaEplus / Ausbildungschance</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
-        <div id="tab-haupt" class="tab-content">
-             <div class="info-grid">
-                <div class="info-col">
-                    <h3>Ziel: Mittlere Reife</h3>
-                    <ul>
-                        <li>2BFS (2-jährige Berufsfachschule)</li>
-                        <li>BAS (Berufsaufbauschule)</li>
-                        <li>Abendrealschule</li>
-                        <li>Schulfremdenprüfung</li>
-                    </ul>
-                </div>
-                <div class="info-col">
-                    <h3>Ziel: Orientierung</h3>
-                    <ul>
-                        <li>AVdual</li>
-                        <li>Freiwilligendienste</li>
-                        <li>400+ Zukunft</li>
-                        <li>BvB / EQ</li>
-                    </ul>
-                </div>
-                <div class="info-col">
-                    <h3>Ziel: Ausbildung</h3>
-                    <ul>
-                        <li>Schulische Ausbildung</li>
-                        <li>Duale Ausbildung</li>
-                        <li>1BFS (1-jährige Berufsfachschule)</li>
-                        <li>BaE / BaEplus</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-mittel" class="tab-content">
-             <div class="info-grid">
-                <div class="info-col">
-                    <h3>Ziel: FH-Reife / Abitur</h3>
-                    <ul>
-                        <li>BK (Berufskolleg)</li>
-                        <li>BOS (Berufsoberschule)</li>
-                        <li>BG (Berufliches Gymnasium)</li>
-                        <li>Abendgymnasium / Kolleg</li>
-                    </ul>
-                </div>
-                <div class="info-col">
-                    <h3>Ziel: Orientierung</h3>
-                    <ul>
-                        <li>AVdual</li>
-                        <li>BK (zur Orientierung)</li>
-                        <li>Freiwilligendienste</li>
-                        <li>BvB / EQ</li>
-                    </ul>
-                </div>
-                <div class="info-col">
-                    <h3>Ziel: Ausbildung</h3>
-                    <ul>
-                        <li>Beamtenlaufbahn</li>
-                        <li>Schulische Ausbildung</li>
-                        <li>Duale Ausbildung</li>
-                        <li>1BFS</li>
-                    </ul>
-                </div>
             </div>
         </div>
-
-        <div style="margin-top: 30px; text-align: center;">
-            <a href="Bildungs-und-Qualifizierungswege-in-Stuttgart.pdf" target="_blank" class="btn-primary">📄 PDF herunterladen</a>
-        </div>
-    </div>
-
-    <!-- 3. GLOSSAR -->
-    <div class="card" id="begriffe">
-        <h2>💡 Begriffe erklärt</h2>
-        <div id="glossary-container"></div>
-    </div>
-
-    <!-- 4. QUIZ -->
-    <div class="card" id="quiz">
-        <h2>🎯 Berufswahl-Quiz</h2>
-        <div id="quiz-intro">
-            <p>Beantworte 3 Fragen und finde heraus, welcher Bereich zu dir passen könnte.</p>
-            <button class="btn-primary" onclick="startQuiz()">Quiz starten</button>
-        </div>
-
-        <div id="quiz-app" style="display:none;">
-            <div style="background:#EEE; height:10px; border-radius:5px; margin-bottom:20px;">
-                <div id="quiz-progress-bar" style="background:var(--primary); height:100%; width:0%; border-radius:5px; transition:width 0.3s;"></div>
-            </div>
-            <div id="quiz-question-container"></div>
-        </div>
-
-        <div id="quiz-results" style="display:none;">
-            <div id="quiz-result-text"></div>
-        </div>
-    </div>
-
-</div>
-
-<footer style="text-align:center; padding: 40px; color:#999; font-size:0.9rem;">
-    &copy; 2026 Meldestelle Berufliche Schulen Stuttgart
-</footer>
-
-<script src="script.js"></script>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
