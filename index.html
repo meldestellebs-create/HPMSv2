@@ -9,10 +9,9 @@
 <body>
 
 <header class="header">
-    <div class="header-content">
-        <!-- Logo Platzhalter oder Text -->
-        <div style="font-size: 2.5rem; margin-right: 15px;">🦁</div>
-        <div>
+    <div class="header-inner">
+        <div class="logo">🦁</div>
+        <div class="header-title">
             <h1>Bildungswege Stuttgart</h1>
             <p>Meldestelle Berufliche Schulen</p>
         </div>
@@ -21,25 +20,25 @@
 
 <div class="container">
 
-    <!-- 1. BILDUNGSWEGETOOL (WIZARD) -->
-    <div class="card">
+    <!-- 1. WIZARD -->
+    <div class="card" id="tool">
         <h2>🎓 Bildungswege-Tool</h2>
-        <p>Finde deinen individuellen Weg zum Wunschabschluss.</p>
+        <p>Wähle deinen aktuellen Stand und dein Ziel aus, um deinen individuellen Weg zu finden.</p>
 
-        <div class="wizard-grid">
+        <div class="wizard-controls">
             <div class="form-group">
                 <label for="start">Start: Dein aktueller Abschluss</label>
                 <select id="start">
                     <option value="">-- Bitte wählen --</option>
-                    <option value="ohneAbschluss">Ohne Abschluss</option>
+                    <option value="ohneAbschluss">Ohne Abschluss (allgemeinbildend)</option>
                     <option value="sbbz">SBBZ (Förderschule)</option>
                     <option value="vabo">VABO (Deutschförderung)</option>
                     <option value="hauptschulabschluss">Hauptschulabschluss</option>
-                    <option value="mittlereReife">Mittlere Reife</option>
+                    <option value="mittlereReife">Mittlere Reife / Realschulabschluss</option>
                     <option value="fachhochschulreife">Fachhochschulreife</option>
                     <option value="abitur">Abitur</option>
-                    <option value="berufsabschluss">Berufsabschluss</option>
-                    <option value="meister">Meister/Techniker</option>
+                    <option value="berufsabschluss">Abgeschlossene Berufsausbildung</option>
+                    <option value="meister">Meister / Techniker</option>
                 </select>
             </div>
 
@@ -48,13 +47,13 @@
                 <select id="ziel">
                     <option value="">-- Bitte wählen --</option>
                     <option value="hauptschulabschluss">Hauptschulabschluss</option>
-                    <option value="mittlereReife">Mittlere Reife</option>
+                    <option value="mittlereReife">Mittlere Reife / Fachschulreife</option>
                     <option value="fachhochschulreife">Fachhochschulreife</option>
-                    <option value="abitur">Abitur</option>
-                    <option value="berufsabschluss">Berufsabschluss</option>
-                    <option value="meister">Meister/Techniker</option>
+                    <option value="abitur">Abitur / Allg. Hochschulreife</option>
+                    <option value="berufsabschluss">Berufsabschluss (Ausbildung)</option>
+                    <option value="meister">Meister / Techniker / Fachwirt</option>
                     <option value="studium">Studium</option>
-                    <option value="bve">BVE</option>
+                    <option value="bve">BVE (Berufsvorbereitung SBBZ)</option>
                     <option value="vabKF">VAB-KF</option>
                     <option value="sonderberufsschule">Sonderberufsschule</option>
                 </select>
@@ -62,23 +61,22 @@
         </div>
 
         <button class="btn-primary" onclick="showPaths()">🔍 Wege anzeigen</button>
-        <button class="btn-primary" style="background: #FFF; color: #000; border: 1px solid #CCC;" onclick="resetPaths()">Zurücksetzen</button>
+        <button class="btn-primary" style="background:#FFF; color:#333; border:2px solid #EEE;" onclick="resetPaths()">Zurücksetzen</button>
 
-        <div id="result" class="result-box"></div>
+        <div id="result" style="margin-top: 30px;"></div>
     </div>
 
-    <!-- 2. NEUE KARTE: BILDUNGS- UND QUALIFIZIERUNGSWEGE (PDF) -->
-    <div class="card">
+    <!-- 2. PDF KARTE -->
+    <div class="card" id="pdf-overview">
         <h2>📋 Übersicht: Bildungs- und Qualifizierungswege</h2>
-        <p>Detaillierte Übersicht aller Möglichkeiten in Stuttgart (basierend auf der offiziellen Grafik).</p>
+        <p>Alle Wege auf einen Blick (basierend auf der offiziellen Grafik).</p>
 
-        <div class="tabs">
+        <div class="tab-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-kein')">Kein Schulabschluss</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-haupt')">Hauptschulabschluss</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-mittel')">Mittlere Reife</button>
         </div>
 
-        <!-- TAB 1: Kein Abschluss -->
         <div id="tab-kein" class="tab-content active">
             <div class="info-grid">
                 <div class="info-col">
@@ -105,16 +103,14 @@
                     <h3>Ziel: Ausbildung</h3>
                     <ul>
                         <li>Duale Ausbildung</li>
-                        <li>BaE / BaEplus</li>
-                        <li>Ausbildungschance</li>
+                        <li>BaE / BaEplus / Ausbildungschance</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 2: Hauptschulabschluss -->
         <div id="tab-haupt" class="tab-content">
-            <div class="info-grid">
+             <div class="info-grid">
                 <div class="info-col">
                     <h3>Ziel: Mittlere Reife</h3>
                     <ul>
@@ -145,15 +141,14 @@
             </div>
         </div>
 
-        <!-- TAB 3: Mittlere Reife -->
         <div id="tab-mittel" class="tab-content">
-            <div class="info-grid">
+             <div class="info-grid">
                 <div class="info-col">
                     <h3>Ziel: FH-Reife / Abitur</h3>
                     <ul>
-                        <li>BK (Berufskolleg) -> FH-Reife</li>
-                        <li>BG (Berufliches Gymnasium) -> Abitur</li>
+                        <li>BK (Berufskolleg)</li>
                         <li>BOS (Berufsoberschule)</li>
+                        <li>BG (Berufliches Gymnasium)</li>
                         <li>Abendgymnasium / Kolleg</li>
                     </ul>
                 </div>
@@ -178,29 +173,42 @@
             </div>
         </div>
 
-        <div style="margin-top: 20px;">
-            <a href="Bildungs-und-Qualifizierungswege-in-Stuttgart.pdf" target="_blank" class="btn-primary" style="text-decoration: none;">📄 PDF Downloaden</a>
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="Bildungs-und-Qualifizierungswege-in-Stuttgart.pdf" target="_blank" class="btn-primary">📄 PDF herunterladen</a>
         </div>
     </div>
 
     <!-- 3. GLOSSAR -->
-    <div class="card">
+    <div class="card" id="begriffe">
         <h2>💡 Begriffe erklärt</h2>
-        <div id="glossary-container">
-            <!-- Wird per JS gefüllt -->
-        </div>
+        <div id="glossary-container"></div>
     </div>
 
-    <!-- 4. QUIZ (Platzhalter Struktur wie gewünscht) -->
-    <div class="card">
+    <!-- 4. QUIZ -->
+    <div class="card" id="quiz">
         <h2>🎯 Berufswahl-Quiz</h2>
-        <div id="quiz-container">
-            <p>Finde heraus, welcher Bereich zu dir passt.</p>
+        <div id="quiz-intro">
+            <p>Beantworte 3 Fragen und finde heraus, welcher Bereich zu dir passen könnte.</p>
             <button class="btn-primary" onclick="startQuiz()">Quiz starten</button>
+        </div>
+
+        <div id="quiz-app" style="display:none;">
+            <div style="background:#EEE; height:10px; border-radius:5px; margin-bottom:20px;">
+                <div id="quiz-progress-bar" style="background:var(--primary); height:100%; width:0%; border-radius:5px; transition:width 0.3s;"></div>
+            </div>
+            <div id="quiz-question-container"></div>
+        </div>
+
+        <div id="quiz-results" style="display:none;">
+            <div id="quiz-result-text"></div>
         </div>
     </div>
 
 </div>
+
+<footer style="text-align:center; padding: 40px; color:#999; font-size:0.9rem;">
+    &copy; 2026 Meldestelle Berufliche Schulen Stuttgart
+</footer>
 
 <script src="script.js"></script>
 </body>
