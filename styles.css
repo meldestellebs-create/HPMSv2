@@ -1,87 +1,75 @@
 
 :root {
-    --stuttgart-yellow: #FFD500;
-    --stuttgart-black: #000000;
-    --text-color: #333333;
-    --bg-color: #FFFFFF;
-    --card-bg: #FFFFFF;
-    --border-color: #E0E0E0;
+    --primary: #FFD500; /* Stuttgart Gelb */
+    --text-on-primary: #000000;
+    --dark: #1A1A1A;
+    --light: #F9F9F9;
+    --border: #E0E0E0;
+    --white: #FFFFFF;
+    --radius: 8px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #F4F4F4;
-    color: var(--text-color);
+    background-color: #F0F2F5;
+    color: #333;
     margin: 0;
     padding: 0;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-/* HEADER */
 .header {
-    background-color: var(--stuttgart-black);
-    color: var(--stuttgart-yellow);
-    padding: 20px 0;
-    margin-bottom: 40px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: var(--dark);
+    color: var(--primary);
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-.header-content {
+.header-inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
+.logo { font-size: 2rem; }
+.header-title h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+.header-title p { margin: 0; font-size: 0.9rem; opacity: 0.9; color: #EEE; }
 
-.header p {
-    margin: 5px 0 0;
-    color: #FFF;
-    font-size: 1rem;
-    opacity: 0.8;
-}
-
-/* CONTAINER */
 .container {
-    max-width: 1200px; /* BREITE WIEDERHERGESTELLT */
+    max-width: 1200px; /* WIDE LAYOUT */
     margin: 0 auto;
     padding: 0 20px;
     padding-bottom: 60px;
 }
 
-/* CARDS */
 .card {
-    background: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    padding: 30px;
-    margin-bottom: 30px;
-    border-top: 5px solid var(--stuttgart-yellow); /* Stuttgart Akzent */
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+    border-top: 6px solid var(--primary);
 }
 
 .card h2 {
     margin-top: 0;
-    color: var(--stuttgart-black);
-    font-size: 1.6rem;
-    border-bottom: 2px solid var(--stuttgart-yellow);
-    padding-bottom: 15px;
-    margin-bottom: 25px;
-    display: inline-block;
+    color: var(--dark);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
 }
 
-/* WIZARD GRID */
-.wizard-grid {
+.card > p { color: #666; margin-bottom: 30px; }
+
+/* WIZARD */
+.wizard-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 30px;
     margin-bottom: 30px;
 }
 
@@ -89,132 +77,187 @@ body {
     display: block;
     font-weight: 700;
     margin-bottom: 8px;
-    color: var(--stuttgart-black);
+    color: var(--dark);
 }
 
 .form-group select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #CCC;
-    border-radius: 4px;
+    padding: 15px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
     font-size: 1rem;
-    background-color: #FFF;
+    background: var(--white);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.form-group select:focus {
+    border-color: var(--primary);
+    outline: none;
 }
 
 .btn-primary {
-    background-color: var(--stuttgart-black);
-    color: var(--stuttgart-yellow);
+    background-color: var(--dark);
+    color: var(--primary);
     border: none;
-    padding: 12px 30px;
+    padding: 15px 30px;
     font-size: 1.1rem;
     font-weight: 700;
-    border-radius: 4px;
+    border-radius: var(--radius);
     cursor: pointer;
     transition: transform 0.1s;
     display: inline-block;
+    text-decoration: none;
 }
 
 .btn-primary:hover {
-    transform: scale(1.02);
-    background-color: #222;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* RESULTS */
-.result-box {
-    margin-top: 30px;
-    border-top: 1px solid #EEE;
-    padding-top: 20px;
-}
-
-.path-item {
+.path-card {
     background: #FAFAFA;
-    border-left: 4px solid var(--stuttgart-black);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--dark);
     padding: 20px;
     margin-bottom: 15px;
-    border-radius: 0 4px 4px 0;
+    border-radius: var(--radius);
 }
 
-.path-item.recommended {
-    border-left-color: var(--stuttgart-yellow);
-    background: #FFFDF0;
+.path-card.recommended {
+    border-left-color: var(--primary);
+    background: #FFFBE6;
 }
 
-.path-title {
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+.path-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.steps-container {
+.path-title { font-weight: 700; font-size: 1.2rem; }
+.badge { background: #EEE; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+
+.path-steps {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     align-items: center;
-    margin: 10px 0;
+    gap: 8px;
 }
 
-.step-badge {
-    background: #EEE;
-    padding: 5px 10px;
+.step {
+    background: var(--white);
+    padding: 6px 12px;
+    border: 1px solid var(--border);
     border-radius: 4px;
-    font-size: 0.9rem;
+    font-weight: 500;
 }
 
-.step-arrow { color: #AAA; }
+.arrow { color: #999; }
+.path-note { margin-top: 15px; font-size: 0.9rem; color: #555; font-style: italic; }
 
-/* PDF CARD TABS */
-.tabs {
+/* TABS (PDF Card) */
+.tab-nav {
     display: flex;
-    border-bottom: 2px solid #EEE;
-    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 25px;
 }
 
 .tab-btn {
-    padding: 12px 24px;
+    padding: 15px 25px;
     background: none;
     border: none;
-    border-bottom: 3px solid transparent;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
+    color: #777;
     cursor: pointer;
-    color: #666;
+    border-bottom: 4px solid transparent;
+    margin-bottom: -2px;
 }
 
 .tab-btn.active {
-    border-bottom-color: var(--stuttgart-yellow);
-    color: var(--stuttgart-black);
+    color: var(--dark);
+    border-bottom-color: var(--primary);
 }
 
-.tab-content { display: none; }
+.tab-content { display: none; animation: fadeIn 0.3s; }
 .tab-content.active { display: block; }
 
 .info-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 30px;
 }
 
 .info-col h3 {
-    font-size: 1.1rem;
-    color: var(--stuttgart-black);
-    background: var(--stuttgart-yellow);
-    padding: 8px 12px;
-    margin-top: 0;
+    background: var(--primary);
+    color: var(--dark);
+    padding: 10px 15px;
     border-radius: 4px;
-    display: inline-block;
+    margin-top: 0;
+    font-size: 1.1rem;
 }
 
-.info-col ul {
-    padding-left: 20px;
+.info-col ul { padding-left: 20px; margin: 0; }
+.info-col li { margin-bottom: 8px; }
+
+/* GLOSSARY */
+.glossary-item {
+    border-bottom: 1px solid #EEE;
 }
 
-.info-col li {
-    margin-bottom: 5px;
+.glossary-title {
+    padding: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    background: #FFF;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .wizard-grid, .info-grid { grid-template-columns: 1fr; }
+.glossary-title:hover { background: #F9F9F9; }
+
+.glossary-content {
+    padding: 0 15px 15px;
+    display: none;
+    color: #555;
+}
+
+.glossary-item.active .glossary-content { display: block; }
+
+/* QUIZ */
+.quiz-option {
+    padding: 15px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quiz-option:hover {
+    border-color: var(--primary);
+    background: #FFFBE6;
+}
+
+.quiz-option.selected {
+    background: var(--primary);
+    color: var(--dark);
+    border-color: var(--primary);
+    font-weight: 700;
+}
+
+.alert {
+    padding: 15px;
+    background: #FEE;
+    color: #C00;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 900px) {
+    .wizard-controls, .info-grid { grid-template-columns: 1fr; }
+    .container { padding: 10px; }
 }
