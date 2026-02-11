@@ -1,6 +1,5 @@
-// --- DATENBANKEN ---
 
-// 1. Daten für Bildungswege & Glossar
+// === DATENBANK: BILDUNGSWEGE (WIZARD) ===
 const bildungswegeData = {
     kein: {
         deutsch: [
@@ -30,11 +29,10 @@ const bildungswegeData = {
     }
 };
 
-// 2. Daten für das Berufswahl-Quiz
+// === DATENBANK: BERUFSWAHL (QUIZ) ===
 const berufeDB = {
     technik: [
         { name: "Elektroniker/in", beschreibung: "Installiere elektrische Anlagen und halte sie instand.", abschluss: "Mittlere Reife", dauer: "3,5 Jahre", chancen: true },
-        { name: "Industriemechaniker/in", beschreibung: "Stelle Maschinen und Anlagen her und warte sie.", abschluss: "Hauptschulabschluss", dauer: "3,5 Jahre", chancen: true },
         { name: "KFZ-Mechatroniker/in", beschreibung: "Repariere und warte Fahrzeuge.", abschluss: "Mittlere Reife", dauer: "3,5 Jahre", chancen: true }
     ],
     gesundheit: [
@@ -42,18 +40,14 @@ const berufeDB = {
         { name: "Pflegefachmann/frau", beschreibung: "Pflege und betreue kranke und ältere Menschen.", abschluss: "Mittlere Reife", dauer: "3 Jahre", chancen: true }
     ],
     wirtschaft: [
-        { name: "Kaufmann/frau für Büromanagement", beschreibung: "Organisiere bürowirtschaftliche Aufgaben.", abschluss: "Mittlere Reife", dauer: "3 Jahre", chancen: true },
-        { name: "Einzelhandelskaufmann/frau", beschreibung: "Verkaufe Waren und berate Kunden.", abschluss: "Hauptschulabschluss", dauer: "3 Jahre", chancen: true }
+        { name: "Kaufmann/frau für Büromanagement", beschreibung: "Organisiere bürowirtschaftliche Aufgaben.", abschluss: "Mittlere Reife", dauer: "3 Jahre", chancen: true }
     ],
     kreativ: [
-        { name: "Mediengestalter/in", beschreibung: "Gestalte digitale und Print-Medien.", abschluss: "Mittlere Reife", dauer: "3 Jahre", chancen: false },
-        { name: "Friseur/in", beschreibung: "Schneide, färbe und style Haare.", abschluss: "Hauptschulabschluss", dauer: "3 Jahre", chancen: true }
+        { name: "Mediengestalter/in", beschreibung: "Gestalte digitale und Print-Medien.", abschluss: "Mittlere Reife", dauer: "3 Jahre", chancen: false }
     ]
 };
 
-// --- MODUL 1: BILDUNGSWEGE WIZARD ---
-
-let currentWizardStep = 1;
+// === WIZARD LOGIK (WIEDERHERGESTELLT) ===
 let selectedBildungsstand = '';
 
 function selectBildungsstand(stand) {
@@ -66,20 +60,11 @@ function selectBildungsstand(stand) {
 
     let options = [];
     if (stand === 'kein') {
-        options = [
-            { id: 'deutsch', text: 'Deutsch lernen' },
-            { id: 'hauptschul', text: 'Hauptschulabschluss machen' }
-        ];
+        options = [{id:'deutsch', text:'Deutsch lernen'}, {id:'hauptschul', text:'Hauptschulabschluss'}];
     } else if (stand === 'hauptschul') {
-        options = [
-            { id: 'mittlerer', text: 'Mittleren Abschluss machen' },
-            { id: 'ausbildung', text: 'Ausbildung beginnen' }
-        ];
+        options = [{id:'mittlerer', text:'Mittleren Abschluss'}, {id:'ausbildung', text:'Ausbildung'}];
     } else {
-        options = [
-            { id: 'fhr', text: 'Fachhochschulreife' },
-            { id: 'abitur', text: 'Abitur' }
-        ];
+        options = [{id:'fhr', text:'Fachhochschulreife'}, {id:'abitur', text:'Abitur'}];
     }
 
     options.forEach(opt => {
@@ -94,28 +79,17 @@ function selectBildungsstand(stand) {
 function showWizardResults(ziel) {
     document.getElementById('wizard-step-2').style.display = 'none';
     document.getElementById('wizard-results').style.display = 'block';
-
     const container = document.getElementById('results-container');
     container.innerHTML = '';
 
     const data = bildungswegeData[selectedBildungsstand][ziel];
-
-    if (data && data.length > 0) {
+    if (data) {
         data.forEach(item => {
             const div = document.createElement('div');
             div.className = 'beruf-card';
-            div.innerHTML = `
-                <h4>${item.name}</h4>
-                <p><em>${item.full}</em></p>
-                <p>${item.description}</p>
-                <div class="beruf-tags">
-                    <span class="beruf-tag">⏱️ ${item.dauer}</span>
-                </div>
-            `;
+            div.innerHTML = `<h4>${item.name}</h4><p><em>${item.full}</em></p><p>${item.description}</p>`;
             container.appendChild(div);
         });
-    } else {
-        container.innerHTML = '<p>Bitte wende dich für eine individuelle Beratung an uns.</p>';
     }
 }
 
@@ -126,186 +100,69 @@ function resetWizard() {
     document.getElementById('wizard-step-1').style.display = 'block';
 }
 
-// --- MODUL 2: PDF DOWNLOAD (Fallback) ---
-function generatePDF(type) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.setFontSize(20);
-    doc.text("Meldestelle Berufliche Schulen Stuttgart", 20, 20);
-
-    doc.setFontSize(16);
-    if(type === 'vabo') {
-        doc.text("Anfrage VABO Schuljahr 26/27", 20, 40);
-        doc.setFontSize(12);
-        doc.text("Bitte füllen Sie dieses Formular vollständig aus.", 20, 50);
-        doc.save("Anfrage-VABO-26-27.pdf");
-    } else {
-        doc.text("Vermittlungsanfrage AVdual", 20, 40);
-        doc.setFontSize(12);
-        doc.text("Anmeldung für das Schuljahr 2026/2027", 20, 50);
-        doc.save("AVdual-Vermittlung.pdf");
-    }
-}
-
-// --- MODUL 3: GLOSSAR ---
+// === GLOSSAR LOGIK ===
 function initGlossary() {
     const container = document.getElementById('glossar-container');
     const terms = [];
-
-    Object.values(bildungswegeData).forEach(category => {
-        Object.values(category).forEach(list => {
-            list.forEach(item => {
-                if (!terms.find(t => t.name === item.name)) {
-                    terms.push(item);
-                }
-            });
-        });
+    Object.values(bildungswegeData).forEach(cat => {
+        Object.values(cat).forEach(list => list.forEach(item => terms.push(item)));
     });
+    // Deduplicate & Sort
+    const uniqueTerms = Array.from(new Set(terms.map(a => a.name)))
+        .map(name => terms.find(a => a.name === name)).sort((a,b) => a.name.localeCompare(b.name));
 
-    terms.sort((a, b) => a.name.localeCompare(b.name));
-
-    terms.forEach((term, index) => {
+    uniqueTerms.forEach(term => {
         const item = document.createElement('div');
-        item.className = 'accordion-item glossary-term'; 
+        item.className = 'accordion-item glossary-term';
         item.innerHTML = `
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                ${term.name} <span style="font-size:0.8rem">▼</span>
+            <div class="accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                ${term.name} <span>▼</span>
             </div>
             <div class="accordion-content">
-                <p><strong>${term.full}</strong></p>
-                <p>${term.description}</p>
-                <p><small>Dauer: ${term.dauer}</small></p>
-            </div>
-        `;
+                <p><strong>${term.full}</strong></p><p>${term.description}</p>
+            </div>`;
         container.appendChild(item);
     });
 }
 
-function toggleAccordion(header) {
-    const item = header.parentElement;
-    item.classList.toggle('active');
-    const arrow = header.querySelector('span');
-    arrow.innerText = item.classList.contains('active') ? '▲' : '▼';
-}
-
-function filterGlossar() {
-    const search = document.getElementById('glossar-search').value.toLowerCase();
-    const items = document.querySelectorAll('.glossary-term');
-
-    items.forEach(item => {
-        const text = item.innerText.toLowerCase();
-        if (text.includes(search)) {
-            item.style.display = 'block';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-}
-
-// --- MODUL 4: BERUFSWAHL-QUIZ ---
+// === QUIZ LOGIK (WIEDERHERGESTELLT) ===
 const QuizApp = {
     questions: [
-        {
-            text: "Was macht dir am meisten Spaß?",
-            options: [
-                { text: "Dinge bauen & reparieren", value: "technik" },
-                { text: "Menschen helfen & pflegen", value: "gesundheit" },
-                { text: "Organisieren & Verkaufen", value: "wirtschaft" },
-                { text: "Kreativ sein & Gestalten", value: "kreativ" }
-            ]
-        },
-        {
-            text: "Wie arbeitest du am liebsten?",
-            options: [
-                { text: "Im Team mit viel Kontakt", value: "social" },
-                { text: "Lieber für mich konzentriert", value: "focus" },
-                { text: "Draußen oder in der Werkstatt", value: "hands" }
-            ]
-        },
-        {
-            text: "Welcher Schulabschluss ist realistisch?",
-            options: [
-                { text: "Hauptschulabschluss", value: "low" },
-                { text: "Mittlere Reife", value: "mid" },
-                { text: "Abitur", value: "high" }
-            ]
-        }
+        { text: "Was macht dir Spaß?", options: [{text:"Bauen", val:"technik"}, {text:"Helfen", val:"gesundheit"}, {text:"Organisieren", val:"wirtschaft"}] },
+        { text: "Wie arbeitest du?", options: [{text:"Im Team", val:"social"}, {text:"Alleine", val:"focus"}] },
+        { text: "Welcher Abschluss?", options: [{text:"Hauptschule", val:"low"}, {text:"Mittlere Reife", val:"mid"}] }
     ],
-    currentQ: 0,
-    answers: [],
-
-    start: function() {
-        this.currentQ = 0;
-        this.answers = [];
-        document.getElementById('quiz-start').style.display = 'none';
-        document.getElementById('quiz-question-container').style.display = 'block';
-        this.showQuestion();
+    currentQ: 0, answers: [],
+    start: function() { 
+        this.currentQ = 0; this.answers = []; 
+        document.getElementById('quiz-start').style.display = 'none'; 
+        document.getElementById('quiz-question-container').style.display = 'block'; 
+        this.showQuestion(); 
     },
-
     showQuestion: function() {
         const q = this.questions[this.currentQ];
         document.getElementById('quiz-question-text').innerText = q.text;
-
-        const progress = ((this.currentQ) / this.questions.length) * 100;
-        document.getElementById('quiz-progress-fill').style.width = progress + '%';
-
-        const container = document.getElementById('quiz-options-container');
-        container.innerHTML = '';
-
-        q.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'btn-option';
-            btn.innerText = opt.text;
-            btn.onclick = () => this.handleAnswer(opt.value);
-            container.appendChild(btn);
+        const c = document.getElementById('quiz-options-container'); c.innerHTML = '';
+        q.options.forEach(o => {
+            const b = document.createElement('button'); b.className = 'btn-option'; b.innerText = o.text;
+            b.onclick = () => { this.answers.push(o.val); this.currentQ++; this.currentQ < this.questions.length ? this.showQuestion() : this.showResults(); };
+            c.appendChild(b);
         });
     },
-
-    handleAnswer: function(val) {
-        this.answers.push(val);
-        this.currentQ++;
-
-        if (this.currentQ < this.questions.length) {
-            this.showQuestion();
-        } else {
-            this.showResults();
-        }
-    },
-
     showResults: function() {
         document.getElementById('quiz-question-container').style.display = 'none';
         document.getElementById('quiz-results').style.display = 'block';
-        document.getElementById('quiz-progress-fill').style.width = '100%';
-
-        const mainCategory = this.answers[0]; 
-        const categoryKey = berufeDB[mainCategory] ? mainCategory : 'wirtschaft';
-        const results = berufeDB[categoryKey];
-        const container = document.getElementById('quiz-result-list');
-        container.innerHTML = '';
-
-        results.forEach(job => {
-            const div = document.createElement('div');
-            div.className = 'beruf-card';
-            div.innerHTML = `
-                <h4>${job.name}</h4>
-                <p>${job.beschreibung}</p>
-                <div class="beruf-tags">
-                    <span class="beruf-tag">🎓 ${job.abschluss}</span>
-                    <span class="beruf-tag">⏱️ ${job.dauer}</span>
-                    ${job.chancen ? '<span class="beruf-tag" style="background:#d4edda; color:#155724">✨ Gute Chancen</span>' : ''}
-                </div>
-            `;
-            container.appendChild(div);
+        const cat = this.answers[0]; 
+        const res = berufeDB[cat] || berufeDB['wirtschaft'];
+        const c = document.getElementById('quiz-result-list'); c.innerHTML = '';
+        res.forEach(j => {
+            c.innerHTML += `<div class="beruf-card"><h4>${j.name}</h4><p>${j.beschreibung}</p></div>`;
         });
     },
-
     reset: function() {
         document.getElementById('quiz-results').style.display = 'none';
         document.getElementById('quiz-start').style.display = 'block';
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    initGlossary();
-});
+document.addEventListener('DOMContentLoaded', initGlossary);
