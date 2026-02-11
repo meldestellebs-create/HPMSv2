@@ -33,7 +33,7 @@ body { background-color: var(--bg-page); color: var(--text-dark); line-height: 1
     padding: 4rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: center; /* Zentriert wie im Original */
+    text-align: center;
 }
 .hero-title {
     font-size: 3.5rem;
@@ -55,7 +55,7 @@ body { background-color: var(--bg-page); color: var(--text-dark); line-height: 1
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    max-width: 800px; /* Begrenzte Breite für Lesbarkeit */
+    max-width: 800px; 
     margin: 0 auto;
 }
 .option-card {
@@ -105,7 +105,7 @@ body { background-color: var(--bg-page); color: var(--text-dark); line-height: 1
 .wizard-step { animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* BERUF CARDS (IM WIZARD/QUIZ) */
+/* BERUF CARDS */
 .beruf-card {
     background: white;
     border: 1px solid #eee;
@@ -151,7 +151,7 @@ body { background-color: var(--bg-page); color: var(--text-dark); line-height: 1
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border-top: 4px solid var(--text-dark); /* Schwarzer Akzent statt Gelb für Kontrast */
+    border-top: 4px solid var(--text-dark); 
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -181,10 +181,20 @@ body { background-color: var(--bg-page); color: var(--text-dark); line-height: 1
     border-left-color: var(--primary);
 }
 .placeholder-text { font-style: italic; color: #888; font-size: 0.9rem; }
+.search-input { width: 100%; padding: 0.8rem; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 1rem; font-size: 1rem; }
+
+/* GLOSSAR */
+.accordion-item { background: white; margin-bottom: 0.5rem; border-radius: 8px; border: 1px solid #ddd; overflow: hidden; }
+.accordion-header { padding: 1rem; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+.accordion-header:hover { background-color: #f0f0f0; }
+.accordion-content { padding: 0 1rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; background-color: #fafafa; border-top: 1px solid transparent; }
+.accordion-item.active .accordion-content { max-height: 300px; padding: 1rem; border-top: 1px solid #ddd; }
+.quiz-progress-bar { width: 100%; height: 8px; background: #ddd; border-radius: 4px; margin-bottom: 1.5rem; overflow: hidden; }
+#quiz-progress-fill { height: 100%; background: var(--text-dark); transition: width 0.3s ease; }
 
 /* MOBILE */
 @media (max-width: 768px) {
     .hero-title { font-size: 2.2rem; }
     .card-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    .small-cards-grid { grid-template-columns: 1fr; } /* Untereinander auf Handy */
+    .small-cards-grid { grid-template-columns: 1fr; }
 }
