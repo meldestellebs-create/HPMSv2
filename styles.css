@@ -1,0 +1,391 @@
+:root {
+    --primary: #FFD700; /* Stuttgart Gelb */
+    --text-dark: #1A1A1A; /* Schwarz */
+    --text-light: #F5F5F5;
+    --bg-page: #ffffff;
+    --bg-card: #f9f9f9;
+    --accent: #333333;
+    --border-radius: 12px;
+    --spacing: 20px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* Header */
+.header {
+    background: var(--text-dark);
+    color: var(--primary);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-main {
+    font-weight: 800;
+    font-size: 1.5rem;
+    display: block;
+}
+
+.logo-sub {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Hero Section */
+.hero {
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.highlight {
+    background: linear-gradient(120deg, var(--primary) 0%, var(--primary) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 0.4em;
+    background-position: 0 88%;
+    color: inherit;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+}
+
+/* Cards Container */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* General Card Styling (GROSSE KARTEN) */
+.option-card {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--primary);
+    transition: transform 0.2s ease;
+}
+
+.option-card:hover {
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.icon-wrapper {
+    font-size: 2rem;
+    background: #fff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* --- SMALL CARDS GRID (NEU) --- */
+.small-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 Spalten */
+    gap: 1.5rem;
+}
+
+.card-small {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.card-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card-header-small {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.icon-small {
+    font-size: 1.5rem;
+}
+
+.card-header-small h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.download-link-small {
+    display: block;
+    color: var(--text-dark);
+    text-decoration: none;
+    padding: 0.5rem;
+    background: #f4f4f4;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.download-link-small:hover {
+    background: var(--primary);
+    color: black;
+}
+
+.placeholder-text {
+    color: #888;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn-option, .btn-primary {
+    background: white;
+    border: 2px solid var(--text-dark);
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.2s;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-option:hover, .btn-primary:hover {
+    background: var(--primary);
+    transform: scale(1.02);
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-decoration: underline;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* --- GLOSSAR STYLES --- */
+.accordion {
+    margin-top: 1.5rem;
+}
+
+.accordion-item {
+    background: white;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.accordion-header {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+}
+
+.accordion-header:hover {
+    background-color: #f0f0f0;
+}
+
+.accordion-content {
+    padding: 0 1rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
+    background-color: #fafafa;
+    border-top: 1px solid transparent;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 300px; 
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+/* --- QUIZ STYLES --- */
+.quiz-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+#quiz-progress-fill {
+    height: 100%;
+    background: var(--text-dark);
+    transition: width 0.3s ease;
+}
+
+.beruf-card {
+    background: white;
+    border: 1px solid #eee;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.beruf-card h4 {
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.beruf-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.beruf-tag {
+    background: #eee;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Download Section (GROSS) */
+.download-group {
+    margin-top: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.download-group h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-dark);
+}
+
+.download-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.download-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #ddd;
+    transition: all 0.2s;
+}
+
+.download-item:hover {
+    border-color: var(--primary);
+    background: #fff9e6;
+}
+
+.file-icon {
+    font-size: 1.5rem;
+}
+
+.file-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.file-meta {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Footer */
+.footer {
+    background: var(--text-dark);
+    color: white;
+    padding: 2rem 1rem;
+    margin-top: 4rem;
+}
+
+.footer-links {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2rem; }
+    .card-header { flex-direction: column; align-items: flex-start; }
+
+    /* Kleine Karten untereinander auf Mobile */
+    .small-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
